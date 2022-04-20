@@ -1,4 +1,4 @@
-package com.demo.controller;
+package com.dxw.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
