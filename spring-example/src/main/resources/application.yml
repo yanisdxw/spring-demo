@@ -2,6 +2,12 @@ server:
   port: 9001
 
 spring:
+  application:
+    name: example
+  boot:
+    admin:
+      client:
+        url: http://localhost:9000
   datasource:
     name: test
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
@@ -11,3 +17,10 @@ spring:
   freemarker:
     template-loader-path: classpath:/webapp
     suffix: .ftl
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
