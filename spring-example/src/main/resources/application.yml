@@ -18,7 +18,6 @@ spring:
     template-loader-path: classpath:/webapp
     suffix: .ftl
 
-
 management:
   endpoints:
     web:
