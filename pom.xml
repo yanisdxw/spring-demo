@@ -11,6 +11,7 @@
     <modules>
         <module>spring-admin</module>
         <module>spring-example</module>
+        <module>spring-example-api</module>
     </modules>
 
     <parent>
@@ -19,6 +20,15 @@
         <version>2.0.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
