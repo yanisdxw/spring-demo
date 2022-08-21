@@ -36,7 +36,7 @@ public class NoteVO {
     /**
      * 创建者id
      */
-    private String createUserId;
+    private Long createUserId;
 
     /**
      * 创建时间

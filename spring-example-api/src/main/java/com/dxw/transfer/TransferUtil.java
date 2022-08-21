@@ -45,18 +45,24 @@ public class TransferUtil {
 
     @SneakyThrows
     private static void transfer(Object source, Object target) {
-        Map<String, Object> sourceMap = new HashMap<>();
+        Map<String, Field> sourceMap = new HashMap<>();
         for (Field field : source.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            Object value = field.get(source);
-            sourceMap.put(field.getName(),value);
+            sourceMap.put(field.getName(),field);
         }
         for(Field field : target.getClass().getDeclaredFields()){
             boolean accessible = field.isAccessible();
             field.setAccessible(true);
-            Object value = sourceMap.get(field.getName());
-            if(value!=null) {
-                field.set(target,value);
+            if(sourceMap.containsKey(field.getName())){
+                Field sourceField = sourceMap.get(field.getName());
+                if(sourceField==null) continue;
+                if(sourceField.getType()!=field.getType()) continue;
+                boolean accessibleSource = sourceField.isAccessible();
+                sourceField.setAccessible(true);
+                Object value = sourceField.get(source);
+                if(value!=null) {
+                    field.set(target,value);
+                }
+                sourceField.setAccessible(accessibleSource);
             }
             field.setAccessible(accessible);
         }

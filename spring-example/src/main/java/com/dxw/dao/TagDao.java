@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public class TagDao {
@@ -29,6 +31,10 @@ public class TagDao {
 
     public Tag getById(Long id){
         return mapper.selectById(id);
+    }
+
+    public List<Tag> getByIds(List<Long> ids){
+        return mapper.selectBatchIds(ids);
     }
 
     public Page<Tag> findListPage(Page page, TagCondition condition){

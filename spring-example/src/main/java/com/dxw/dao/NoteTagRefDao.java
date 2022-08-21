@@ -5,6 +5,7 @@ import com.dxw.entity.NoteTagRef;
 import com.dxw.mapper.NoteTagRefMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,7 @@ public class NoteTagRefDao {
         mapper.insert(ref);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void insertBatch(Long noteId, Set<Long> tagIds){
         for(Long tagId:tagIds){
             insert(noteId, tagId);
@@ -33,11 +35,12 @@ public class NoteTagRefDao {
 
     public void delete(Long noteId, Long tagId){
         QueryWrapper<NoteTagRef> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("notd_id",noteId);
+        queryWrapper.eq("note_id",noteId);
         queryWrapper.eq("tag_id",tagId);
         mapper.delete(queryWrapper);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(Long noteId, Set<Long> tagIds){
         for(Long tagId:tagIds){
             delete(noteId,tagId);
