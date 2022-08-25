@@ -1,5 +1,7 @@
 package com.dxw.transfer;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dxw.common.PageParam;
 import com.dxw.dao.NoteDao;
 import com.dxw.dao.NoteTagRefDao;
 import com.dxw.dao.TagDao;
@@ -57,6 +59,16 @@ public class TransferHandler {
             note.setCreateUserId(1L);
             note.setCreateUserName("test");
         });
+        TransferUtil.register(Page.class, PageParam.class, ((page, pageParam) -> {
+            pageParam.setNo(page.getCurrent());
+            pageParam.setSize(page.getSize());
+            pageParam.setTotal(page.getTotal());
+            pageParam.setDatas(page.getRecords());
+        }));
+        TransferUtil.register(PageParam.class, Page.class, ((pageParam, page) -> {
+            page.setSize(pageParam.getSize());
+            page.setCurrent(pageParam.getNo());
+        }));
     }
 
 

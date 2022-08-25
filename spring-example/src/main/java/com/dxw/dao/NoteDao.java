@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dxw.condition.NoteCondition;
 import com.dxw.entity.Note;
 import com.dxw.mapper.NoteMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,11 +32,11 @@ public class NoteDao {
 
     public Page<Note> findListPage(Page page, NoteCondition condition){
         QueryWrapper<Note> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id",condition.getId());
-        queryWrapper.like("subject",condition.getSubject());
-        queryWrapper.gt("create_time", condition.getCreateTimeFloor());
-        queryWrapper.lt("create_time",condition.getCreateTimeCeiling());
-        queryWrapper.eq("create_user_id",condition.getId());
+        if(condition.getId()!=null) queryWrapper.eq("id",condition.getId());
+        if(StringUtils.isNotEmpty(condition.getSubject())) queryWrapper.like("subject",condition.getSubject());
+        if(condition.getCreateTimeFloor()!=null) queryWrapper.gt("create_time", condition.getCreateTimeFloor());
+        if(condition.getCreateTimeCeiling()!=null) queryWrapper.lt("create_time",condition.getCreateTimeCeiling());
+        if(condition.getCreateUserId()!=null) queryWrapper.eq("create_user_id",condition.getCreateUserId());
         return mapper.selectPage(page, queryWrapper);
     }
 

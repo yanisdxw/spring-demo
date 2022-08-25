@@ -1,6 +1,7 @@
 package com.dxw.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dxw.common.PageParam;
 import com.dxw.condition.TagCondition;
 import com.dxw.dao.TagDao;
 import com.dxw.dto.TagAddModifyRequest;
@@ -46,15 +47,15 @@ public class TagService {
         return tagVO;
     }
 
-    public com.dxw.common.Page<TagVO> getTagPage(TagQueryRequest request){
-        com.dxw.common.Page page = request.getPage();
+    public PageParam<TagVO> getTagPage(TagQueryRequest request){
+        PageParam page = request.getPage();
         Page<Tag> tagPage = new Page<>();
         tagPage.setSize(page.getSize());
         tagPage.setCurrent(page.getNo());
         TagCondition condition = TransferUtil.to(request, TagCondition.class);
         tagPage = tagDao.findListPage(tagPage, condition);
         List<TagVO> tagVOList = TransferUtil.to(tagPage.getRecords(), TagVO.class);
-        com.dxw.common.Page<TagVO> tagVOPage = com.dxw.common.Page.of(page.getNo(),page.getSize());
+        PageParam<TagVO> tagVOPage = TransferUtil.to(tagPage, PageParam.class);
         tagVOPage.setDatas(tagVOList);
         tagVOPage.setTotal(tagPage.getTotal());
         return tagVOPage;

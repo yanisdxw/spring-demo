@@ -1,9 +1,13 @@
 package com.dxw.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dxw.common.PageParam;
+import com.dxw.condition.NoteCondition;
 import com.dxw.dao.NoteDao;
 import com.dxw.dao.NoteTagRefDao;
 import com.dxw.dao.TagDao;
 import com.dxw.dto.NoteAddModifyRequest;
+import com.dxw.dto.NoteDeleteRequest;
 import com.dxw.dto.NoteQueryRequest;
 import com.dxw.entity.Note;
 import com.dxw.entity.Tag;
@@ -76,5 +80,22 @@ public class NoteService {
         Note note = noteDao.getById(request.getId());
         if(note==null) return null;
         return TransferUtil.to(note, NoteVO.class);
+    }
+
+    public PageParam<NoteVO> getNoteByPage(NoteQueryRequest request){
+        NoteCondition condition = new NoteCondition();
+        condition.setSubject(request.getSubject());
+        condition.setCreateUserId(request.getCreateUserId());
+        condition.setId(request.getId());
+        Page page = TransferUtil.to(request.getPage(), Page.class);
+        page = noteDao.findListPage(page, condition);
+        List<Note> notes = page.getRecords();
+        List<NoteVO> noteVOS = TransferUtil.to(notes, NoteVO.class);
+        page.setRecords(noteVOS);
+        return TransferUtil.to(page, PageParam.class);
+    }
+
+    public void deleteById(NoteDeleteRequest request){
+        noteDao.deleteById(request.getId());
     }
 }

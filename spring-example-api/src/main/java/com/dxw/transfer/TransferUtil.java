@@ -2,6 +2,7 @@ package com.dxw.transfer;
 
 import lombok.SneakyThrows;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -25,7 +26,9 @@ public class TransferUtil {
         if(tClass==null){
             throw new Exception("target class cloud not be null!");
         }
-        T target = tClass.newInstance();
+        Constructor<T> constructor = tClass.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        T target = constructor.newInstance();
         instance.transfer(source, target);
         return target;
     }

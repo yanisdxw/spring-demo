@@ -5,21 +5,22 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Page<T> {
-    private int no;
-    private int size;
+public class PageParam<T> {
+    private long no;
+    private long size;
     private long total;
     private List<T> datas;
 
-    private Page(){
+    private PageParam(){
 
     }
 
-    public static Page of(int no, int size){
-        Page page = new Page();
+    public static PageParam of(int no, int size){
+        PageParam page = new PageParam();
         page.setNo(no);
         page.setSize(size);
         return page;
     }
+
 
 }

@@ -1,6 +1,6 @@
 package com.dxw.service;
 
-import com.dxw.common.Page;
+import com.dxw.common.PageParam;
 import com.dxw.dto.TagAddModifyRequest;
 import com.dxw.dto.TagQueryRequest;
 import com.dxw.vo.TagVO;
@@ -31,8 +31,8 @@ public class TagServiceTest {
     @Test
     public void testPage() throws Exception {
         TagQueryRequest tagQueryRequest = new TagQueryRequest();
-        tagQueryRequest.setPage(Page.of(0,2));
-        Page<TagVO> page = tagService.getTagPage(tagQueryRequest);
+        tagQueryRequest.setPage(PageParam.of(0,2));
+        PageParam<TagVO> page = tagService.getTagPage(tagQueryRequest);
         System.out.println(page);
         tagQueryRequest.setName("测试2");
         page = tagService.getTagPage(tagQueryRequest);

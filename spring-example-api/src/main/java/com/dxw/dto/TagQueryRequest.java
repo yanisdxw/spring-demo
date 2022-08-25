@@ -1,6 +1,6 @@
 package com.dxw.dto;
 
-import com.dxw.common.Page;
+import com.dxw.common.PageParam;
 import lombok.Data;
 
 @Data
@@ -9,5 +9,5 @@ public class TagQueryRequest {
     private String name;
     private Byte isRoot;
     private Long parentId;
-    private Page page;
+    private PageParam page;
 }
